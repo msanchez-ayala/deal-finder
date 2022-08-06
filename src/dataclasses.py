@@ -50,17 +50,17 @@ class ProductVariant:
     styleId01: str
     styleId02: int
     styleId: str
-    __typename: str
+    type_name: str
 
 
 @dataclass
 class Swatch:
-    primaryImage: Url
-    hoverImage: Url
+    primary_img: Url
+    hover_img: Url
     url: Url
-    colorId: int
-    inStore: bool
-    __typename: str
+    color_id: int
+    is_in_store: bool
+    type_name: str
 
 
 @dataclass
@@ -81,4 +81,4 @@ class Product:
     unifiedId: str
     skuStyleOrder: list[ProductVariant]
     swatches: list[Swatch]
-    __typename: str
+    type_name: str
