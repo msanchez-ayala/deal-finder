@@ -17,3 +17,24 @@ def make_swatch(data: dict) -> dataclasses.Swatch:
         is_in_store=is_in_store,
         type_name=data['__typename']
     )
+
+
+def make_product_variant(data: dict) -> dataclasses.ProductVariant:
+    color = dataclasses.Color(
+        group=data['colorGroup'],
+        id=int(data['colorId']),
+        name=data['colorName']
+    )
+    size = dataclasses.Sizes(data['size'])
+    sku_style_order_id = int(data['skuStyleOrderId'])
+    return dataclasses.ProductVariant(
+        color=color,
+        is_in_store=False,
+        size=size,
+        sku=data['sku'],
+        sku_style_order_id=sku_style_order_id,
+        style_id_01=data['styleId01'],
+        style_id_02=data['styleId02'],
+        style_id=data['styleId'],
+        type_name=data['__typename']
+    )

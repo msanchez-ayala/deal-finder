@@ -39,17 +39,21 @@ class PriceRange:
 
 
 @dataclass
+class Color:
+    group: str
+    id: int
+    name: str
+
+@dataclass
 class ProductVariant:
-    colorGroup: str
-    colorId: int
-    colorName: str
-    inStore: bool
+    color: Color
+    is_in_store: bool
     size: Sizes
     sku: str
-    skuStyleOrderId: int
-    styleId01: str
-    styleId02: int
-    styleId: str
+    sku_style_order_id: int
+    style_id_01: str
+    style_id_02: str
+    style_id: str
     type_name: str
 
 
