@@ -34,6 +34,21 @@ def prod_variant_data():
     }
 
 
+def test_make_price_range():
+    price_range = parse_request.make_price_range(['68.00'])
+    assert price_range == dataclasses.PriceRange(min=68.00, max=68.00)
+
+    price_range = parse_request.make_price_range(['20.00', '30.00'])
+    assert price_range == dataclasses.PriceRange(min=20.00, max=30.00)
+
+    price_range = parse_request.make_price_range(['30.00', '20.00'])
+    assert price_range == dataclasses.PriceRange(min=20.00, max=30.00)
+
+    # Can't pass empty list
+    with pytest.raises(ValueError):
+        parse_request.make_price_range([])
+
+
 def test_make_swatch(swatch_data):
     swatch = parse_request.make_swatch(swatch_data)
     assert swatch == dataclasses.Swatch(
@@ -67,3 +82,5 @@ def test_make_product_variant(prod_variant_data):
         style_id='LM1219S-053884',
         type_name='SkuStyle_CDP'
     )
+
+

@@ -38,3 +38,17 @@ def make_product_variant(data: dict) -> dataclasses.ProductVariant:
         style_id=data['styleId'],
         type_name=data['__typename']
     )
+
+
+def make_price_range(prices: list[str]) -> dataclasses.PriceRange:
+    if not prices:
+        raise ValueError("Expected at least one value for a price range.")
+    num_prices = len(prices)
+    prices = [float(price) for price in prices]
+    if num_prices == 1:
+        price = prices[0]
+        return dataclasses.PriceRange(min=price, max=price)
+    if num_prices > 2:
+        raise ValueError(f"Expected at most 2 values, but got {num_prices}")
+    min_price, max_price = min(prices), max(prices)
+    return dataclasses.PriceRange(min=min_price, max=max_price)
