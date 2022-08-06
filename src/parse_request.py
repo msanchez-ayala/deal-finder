@@ -52,3 +52,36 @@ def make_price_range(prices: list[str]) -> dataclasses.PriceRange:
         raise ValueError(f"Expected at most 2 values, but got {num_prices}")
     min_price, max_price = min(prices), max(prices)
     return dataclasses.PriceRange(min=min_price, max=max_price)
+
+
+def make_product(data: dict) -> dataclasses.Product:
+    sizes = [dataclasses.Sizes(size) for size in data['allAvailableSizes']]
+    currency_code = dataclasses.CurrencyCodes(data['currencyCode'])
+    default_sku = data['defaultSku']
+    list_price_range = make_price_range(data['listPrice'])
+    sale_price_range = make_price_range(data['productSalePrice'])
+    pdp_url = Url(data['pdpUrl'])
+    variants = [make_product_variant(variant_data)
+                for variant_data in data['skuStyleOrder']]
+    swatches = [make_swatch(swatch_data)
+                for swatch_data in data['swatches']]
+
+    return dataclasses.Product(
+        available_sizes=sizes,
+        currency_code=currency_code,
+        default_sku=data['defaultSku'],
+        display_name=data['displayName'],
+        list_price_range=list_price_range,
+        parent_cat_unified_id=data['parentCategoryUnifiedId'],
+        is_on_sale=data['productOnSale'],
+        sale_price_range=sale_price_range,
+        pdp_url=pdp_url,
+        product_coverage=data['productCoverage'],
+        repo_id=data['repositoryId'],
+        proudct_id=data['productId'],
+        is_in_store=data['inStore'],
+        unified_id=data['unifiedId'],
+        variants=variants,
+        swatches=swatches,
+        type_name=data['__typename']
+    )

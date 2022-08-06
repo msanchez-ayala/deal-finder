@@ -1,8 +1,12 @@
+import json
 import pytest
 from src import dataclasses
 from src import parse_request
 
 Url = dataclasses.Url
+
+
+PRODUCT_DATA_FILE = 'test/files/product.json'
 
 
 @pytest.fixture
@@ -84,3 +88,8 @@ def test_make_product_variant(prod_variant_data):
     )
 
 
+def test_make_product_integration():
+    with open(PRODUCT_DATA_FILE) as json_file:
+        data = json.load(json_file)
+    product = parse_request.make_product(data)
+    assert isinstance(product, dataclasses.Product)

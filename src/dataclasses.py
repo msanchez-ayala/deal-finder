@@ -69,20 +69,20 @@ class Swatch:
 
 @dataclass
 class Product:
-    allAvailableSizes: list[Sizes]
-    currencyCode: CurrencyCodes
-    defaultSku: str
-    displayName: str
-    listPrice: PriceRange
-    parentCategoryUnifiedId: str
-    productOnSale: bool
-    productSalePrice: PriceRange
-    pdpUrl: Url
-    productCoverage: str
-    repositoryId: str
-    productId: str
-    inStore: bool
-    unifiedId: str
-    skuStyleOrder: list[ProductVariant]
+    available_sizes: list[Sizes]
+    currency_code: CurrencyCodes
+    default_sku: str
+    display_name: str
+    list_price_range: PriceRange
+    parent_cat_unified_id: str
+    is_on_sale: bool
+    sale_price_range: PriceRange
+    pdp_url: Url
+    product_coverage: str
+    repo_id: str
+    proudct_id: str
+    is_in_store: bool
+    unified_id: str
+    variants: list[ProductVariant]
     swatches: list[Swatch]
     type_name: str

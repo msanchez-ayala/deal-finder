@@ -1,0 +1,116 @@
+{
+					"allAvailableSizes": [
+						"XXL",
+						"XL",
+						"M",
+						"L",
+						"XS",
+						"S"
+					],
+					"currencyCode": "USD",
+					"defaultSku": "us_132157495",
+					"displayName": "Metal Vent Breathe Tank",
+					"listPrice": [
+						"68.00"
+					],
+					"parentCategoryUnifiedId": "mens-tanks",
+					"productOnSale": true,
+					"productSalePrice": [
+						"44.00"
+					],
+					"pdpUrl": "/p/mens-tanks/Metal-Vent-Breathe-Tank-MD/_/prod9370474",
+					"productCoverage": "",
+					"repositoryId": "prod9370474",
+					"productId": "prod9370474",
+					"inStore": false,
+					"unifiedId": "Metal-Vent-Breathe-Tank-MD",
+					"skuStyleOrder": [
+						{
+							"colorGroup": "pinkCamoPrinted",
+							"colorId": "55480",
+							"colorName": "Covered Camo Purple Highlight/Caprese Yellow",
+							"inStore": false,
+							"size": "XXL",
+							"sku": "us_143504509",
+							"skuStyleOrderId": "6",
+							"styleId01": "LM1219S",
+							"styleId02": "055480",
+							"styleId": "LM1219S-055480",
+							"__typename": "SkuStyle_CDP"
+						},
+						{
+							"colorGroup": "greyCamo",
+							"colorId": "53870",
+							"colorName": "Covered Camo Graphite Grey/White Opal",
+							"inStore": false,
+							"size": "XXL",
+							"sku": "us_142325603",
+							"skuStyleOrderId": "5",
+							"styleId01": "LM1219S",
+							"styleId02": "053870",
+							"styleId": "LM1219S-053870",
+							"__typename": "SkuStyle_CDP"
+						},
+						{
+							"colorGroup": "greenpurple",
+							"colorId": "55479",
+							"colorName": "Covered Camo Scream Green Light/Charged Indigo",
+							"inStore": false,
+							"size": "XXL",
+							"sku": "us_143504423",
+							"skuStyleOrderId": "4",
+							"styleId01": "LM1219S",
+							"styleId02": "055479",
+							"styleId": "LM1219S-055479",
+							"__typename": "SkuStyle_CDP"
+						},
+						{
+							"colorGroup": "orangePrinted",
+							"colorId": "53884",
+							"colorName": "Covered Camo Vintage Plum/Auric Gold",
+							"inStore": false,
+							"size": "XXL",
+							"sku": "us_142325756",
+							"skuStyleOrderId": "3",
+							"styleId01": "LM1219S",
+							"styleId02": "053884",
+							"styleId": "LM1219S-053884",
+							"__typename": "SkuStyle_CDP"
+						}
+					],
+					"swatches": [
+						{
+							"primaryImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_055480_1",
+							"hoverImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_055480_2",
+							"url": "/p/mens-tanks/Metal-Vent-Breathe-Tank-MD/_/prod9370474?color=55480",
+							"colorId": "55480",
+							"inStore": false,
+							"__typename": "ColorSwatch_CDP"
+						},
+						{
+							"primaryImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_053870_1",
+							"hoverImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_053870_2",
+							"url": "/p/mens-tanks/Metal-Vent-Breathe-Tank-MD/_/prod9370474?color=53870",
+							"colorId": "53870",
+							"inStore": false,
+							"__typename": "ColorSwatch_CDP"
+						},
+						{
+							"primaryImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_055479_1",
+							"hoverImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_055479_2",
+							"url": "/p/mens-tanks/Metal-Vent-Breathe-Tank-MD/_/prod9370474?color=55479",
+							"colorId": "55479",
+							"inStore": false,
+							"__typename": "ColorSwatch_CDP"
+						},
+						{
+							"primaryImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_053884_1",
+							"hoverImage": "https://images.lululemon.com/is/image/lululemon/LM1219S_053884_2",
+							"url": "/p/mens-tanks/Metal-Vent-Breathe-Tank-MD/_/prod9370474?color=53884",
+							"colorId": "53884",
+							"inStore": false,
+							"__typename": "ColorSwatch_CDP"
+						}
+					],
+					"__typename": "Product_CDP"
+				}
