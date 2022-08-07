@@ -7,8 +7,11 @@ from dataclasses import dataclass
 
 
 class QueryTypes:
-    MENS_SALE = 'N-1z0xcmkZ8t6'
+    MENS_SALE_ALL = 'N-1z0xcmkZ8t6'
     MENS_SALE_SHORTS = 'N-1z0xcmkZ1z0xbb9Z8t6'
+    MENS_SALE_PANTS = 'N-1z0xcmkZ1z0xbazZ8t6'
+    MENS_SALE_SHIRTS = 'N-1z0xcmkZ1z0xbckZ8t6'
+    MENS_SALE_COATS_JACKETS = 'N-1z0xcmkZ1z0xbb5Z8t6'
 
 
 class CurrencyCodes(Enum):

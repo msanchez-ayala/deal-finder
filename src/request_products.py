@@ -13,13 +13,7 @@ HOME_ENDPOINT = 'https://shop.lululemon.com'
 GQL_ENDPOINT = f"{HOME_ENDPOINT}/snb/graphql"
 
 # Empirically determined maximum results per page without breaking the request
-MAX_PAGE_SIZE = 9
-
-MIN_PAGE_NUM = 1
-# arbitrarily chosen large page number - usually there aren't actually more
-# than 5
-MAX_PAGE_NUM = 50
-
+MAX_PAGE_SIZE = 20
 
 # idk how to format this better without breaking the request
 payload_template = string.Template("""
@@ -32,19 +26,23 @@ def get_products(sizes: list[str],
                  opt_search_terms: list[str]
                  ) -> Optional[list[dataclasses.Product]]:
     matching_products = []
-    for page_num in range(MIN_PAGE_NUM, MAX_PAGE_NUM):
+    page_num = 1
+    more_to_search = True
+    while more_to_search:
         payload = payload_template.substitute(
-            QUERY_TYPE=dataclasses.QueryTypes.MENS_SALE,
+            QUERY_TYPE=dataclasses.QueryTypes.MENS_SALE_SHORTS,
             PAGE_NUM=page_num,
             PAGE_SIZE=MAX_PAGE_SIZE)
         products = _get_products(payload)
         if not products:
+            more_to_search = False
             break
         matching_products.extend(
             filter_products.get_matching_products(
                 products, sizes, req_search_terms, opt_search_terms))
         print(f'Success: {page_num=}')
-        time.sleep(0.1)
+        page_num += 1
+        time.sleep(0.2)
     return matching_products
 
 
