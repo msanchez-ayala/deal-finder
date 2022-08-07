@@ -6,14 +6,9 @@ from enum import Enum
 from dataclasses import dataclass
 
 
-class Sizes(Enum):
-    XXS = 'XXS'
-    XS = 'XS'
-    S = 'S'
-    M = 'M'
-    L = 'L'
-    XL = 'XL'
-    XXL = 'XXL'
+class QueryTypes:
+    MENS_SALE = 'N-1z0xcmkZ8t6'
+    MENS_SALE_SHORTS = 'N-1z0xcmkZ1z0xbb9Z8t6'
 
 
 class CurrencyCodes(Enum):
@@ -48,7 +43,7 @@ class Color:
 class ProductVariant:
     color: Color
     is_in_store: bool
-    size: Sizes
+    size: str
     sku: str
     sku_style_order_id: int
     style_id_01: str
@@ -69,7 +64,7 @@ class Swatch:
 
 @dataclass
 class Product:
-    available_sizes: list[Sizes]
+    available_sizes: list[str]
     currency_code: CurrencyCodes
     default_sku: str
     display_name: str

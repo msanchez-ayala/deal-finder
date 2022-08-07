@@ -1,7 +1,7 @@
 import json
 import pytest
 from src import dataclasses
-from src import parse_request
+from src import parse_product
 
 Url = dataclasses.Url
 
@@ -39,22 +39,22 @@ def prod_variant_data():
 
 
 def test_make_price_range():
-    price_range = parse_request.make_price_range(['68.00'])
+    price_range = parse_product.make_price_range(['68.00'])
     assert price_range == dataclasses.PriceRange(min=68.00, max=68.00)
 
-    price_range = parse_request.make_price_range(['20.00', '30.00'])
+    price_range = parse_product.make_price_range(['20.00', '30.00'])
     assert price_range == dataclasses.PriceRange(min=20.00, max=30.00)
 
-    price_range = parse_request.make_price_range(['30.00', '20.00'])
+    price_range = parse_product.make_price_range(['30.00', '20.00'])
     assert price_range == dataclasses.PriceRange(min=20.00, max=30.00)
 
     # Can't pass empty list
     with pytest.raises(ValueError):
-        parse_request.make_price_range([])
+        parse_product.make_price_range([])
 
 
 def test_make_swatch(swatch_data):
-    swatch = parse_request.make_swatch(swatch_data)
+    swatch = parse_product.make_swatch(swatch_data)
     assert swatch == dataclasses.Swatch(
         primary_img=Url(
             'https://images.lululemon.com/is/image/lululemon/LM1219S_053870_1'),
@@ -69,7 +69,7 @@ def test_make_swatch(swatch_data):
 
 
 def test_make_product_variant(prod_variant_data):
-    pv = parse_request.make_product_variant(prod_variant_data)
+    pv = parse_product.make_product_variant(prod_variant_data)
     color = dataclasses.Color(
         group='orangePrinted',
         id=53884,
@@ -78,7 +78,7 @@ def test_make_product_variant(prod_variant_data):
     assert pv == dataclasses.ProductVariant(
         color=color,
         is_in_store=False,
-        size=dataclasses.Sizes.XXL,
+        size='XXL',
         sku="us_142325756",
         sku_style_order_id=3,
         style_id_01='LM1219S',
@@ -91,5 +91,5 @@ def test_make_product_variant(prod_variant_data):
 def test_make_product_integration():
     with open(PRODUCT_DATA_FILE) as json_file:
         data = json.load(json_file)
-    product = parse_request.make_product(data)
+    product = parse_product.make_product(data)
     assert isinstance(product, dataclasses.Product)

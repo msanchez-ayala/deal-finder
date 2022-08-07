@@ -25,12 +25,11 @@ def make_product_variant(data: dict) -> dataclasses.ProductVariant:
         id=int(data['colorId']),
         name=data['colorName']
     )
-    size = dataclasses.Sizes(data['size'])
     sku_style_order_id = int(data['skuStyleOrderId'])
     return dataclasses.ProductVariant(
         color=color,
         is_in_store=False,
-        size=size,
+        size=data['size'],
         sku=data['sku'],
         sku_style_order_id=sku_style_order_id,
         style_id_01=data['styleId01'],
@@ -55,7 +54,6 @@ def make_price_range(prices: list[str]) -> dataclasses.PriceRange:
 
 
 def make_product(data: dict) -> dataclasses.Product:
-    sizes = [dataclasses.Sizes(size) for size in data['allAvailableSizes']]
     currency_code = dataclasses.CurrencyCodes(data['currencyCode'])
     default_sku = data['defaultSku']
     list_price_range = make_price_range(data['listPrice'])
@@ -67,7 +65,7 @@ def make_product(data: dict) -> dataclasses.Product:
                 for swatch_data in data['swatches']]
 
     return dataclasses.Product(
-        available_sizes=sizes,
+        available_sizes=data['allAvailableSizes'],
         currency_code=currency_code,
         default_sku=data['defaultSku'],
         display_name=data['displayName'],
