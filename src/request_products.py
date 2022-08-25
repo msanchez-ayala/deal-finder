@@ -1,4 +1,4 @@
-import argparse
+import dataclasses
 import requests
 import string
 import time
@@ -21,9 +21,7 @@ payload_template = string.Template("""
 """)
 
 
-def get_products(sizes: list[str],
-                 req_search_terms: list[str],
-                 opt_search_terms: list[str]
+def get_products(search_params: models.SearchParameters
                  ) -> Optional[list[models.Product]]:
     matching_products = []
     page_num = 1
@@ -38,8 +36,7 @@ def get_products(sizes: list[str],
             more_to_search = False
             break
         matching_products.extend(
-            filter_products.get_matching_products(
-                products, sizes, req_search_terms, opt_search_terms))
+            filter_products.get_matching_products(products, search_params))
         print(f'Success: {page_num=}')
         page_num += 1
         time.sleep(0.2)

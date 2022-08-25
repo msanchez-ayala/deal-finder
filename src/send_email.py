@@ -1,8 +1,8 @@
 import os
 import smtplib
 import ssl
-from email import message
-from datetime import date
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 EMAIL_SENDER_ADDRESS = os.environ.get('EMAIL_SENDER_ADDRESS')
@@ -22,25 +22,33 @@ def validate_env_vars() -> None:
                       f'{EMAIL_SENDER_PASSWORD=}.')
 
 
-def make_message(body: str) -> message.EmailMessage:
+def make_message(body: str = '',
+                 html: str = '') -> MIMEMultipart:
     validate_env_vars()
-    msg = message.EmailMessage()
+    msg = MIMEMultipart()
     msg['From'] = EMAIL_SENDER_ADDRESS
     msg['To'] = EMAIL_RECEIVER_ADDRESS
     msg['Subject'] = SUBJECT
-    msg.set_content(body)
+    body_text = MIMEText(body, 'plain')
+    html_text = MIMEText(html, 'html')
+    msg.attach(body_text)
+    msg.attach(html_text)
     return msg
 
 
-def send_message(msg: message.EmailMessage) -> None:
+def send_message(msg: MIMEMultipart) -> None:
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL(host='smtp.gmail.com', context=context) as server:
         server.login(user=EMAIL_SENDER_ADDRESS, password=EMAIL_SENDER_PASSWORD)
         server.send_message(msg)
 
 
-if __name__ == '__main__':
-    msg = make_message('test email')
+def send_email(body: str = '', html: str = '') -> None:
+    msg = make_message(body=body, html=html)
     send_message(msg)
+
+
+if __name__ == '__main__':
+    send_email('test email')
 
 

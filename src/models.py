@@ -1,7 +1,7 @@
 """
 Classes to store data from QraphQL query responses
 """
-
+import dataclasses
 from enum import Enum
 from dataclasses import dataclass
 
@@ -20,6 +20,27 @@ class CurrencyCodes(Enum):
 
 class Url(str):
     pass
+
+
+@dataclass
+class SearchParameters:
+    sizes: list[str] = dataclasses.field(default_factory=list)
+    req_search_terms: list[str] = dataclasses.field(default_factory=list)
+    opt_search_terms: list[str] = dataclasses.field(default_factory=list)
+
+    def __post_init__(self):
+        if not self.sizes:
+            self.sizes = ['M']
+        if not self.req_search_terms:
+            self.req_search_terms = ['Lined', '7"']
+
+    def __repr__(self) -> str:
+        header = 'SEARCH PARAMETERS'
+        lines = [header,
+                 f'Sizes: {self.sizes}',
+                 f'Required search terms: {self.req_search_terms}',
+                 f'Optional search terms: {self.opt_search_terms}']
+        return '\n'.join(lines)
 
 
 @dataclass

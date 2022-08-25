@@ -1,10 +1,16 @@
 import argparse
+import dataclasses
+import pandas as pd
 import sys
+from typing import Iterator
+from typing import List
 
+from src import models
 from src import request_products
+from src import send_email
 
 
-def parse_args(args: list[str]) -> argparse.Namespace:
+def parse_args(args: list[str]) -> models.SearchParameters:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--size',
@@ -30,16 +36,34 @@ def parse_args(args: list[str]) -> argparse.Namespace:
         help="Keyword search terms where at least one must be found in each "
              "match."
     )
-    return parser.parse_args(args)
+    return parser.parse_args(args, namespace=models.SearchParameters())
+
+
+def _yield_ser_products(products: List[models.Product]) -> Iterator[dict]:
+    for product in products:
+        yield dataclasses.asdict(product)
+
+
+def _make_email_body(search_params: models.SearchParameters,
+                     products: List[models.Product]) -> str:
+    num_products = len(products)
+    body_lines = [repr(search_params),
+                  '\n',
+                  f'{num_products} found']
+    return '\n'.join(body_lines)
+
+
+def _make_email_html(products: List[models.Product]) -> str:
+    records = _yield_ser_products(products)
+    return pd.DataFrame.from_records(records).to_html()
 
 
 def main():
-    args = parse_args(sys.argv[1:])
-    products = request_products.get_products(
-        args.sizes,
-        args.req_search_terms,
-        args.opt_search_terms)
-    print(f'Matches: {[product.display_name for product in products]}')
+    search_params = parse_args(sys.argv[1:])
+    products = request_products.get_products(search_params)
+    body = _make_email_body(search_params, products)
+    html = _make_email_html(products)
+    send_email.send_email(body=body, html=html)
 
 
 if __name__ == '__main__':
