@@ -1,9 +1,9 @@
 import json
 import pytest
-from src import dataclasses
+from src import models
 from src import parse_product
 
-Url = dataclasses.Url
+Url = models.Url
 
 
 PRODUCT_DATA_FILE = 'test/files/product.json'
@@ -40,13 +40,13 @@ def prod_variant_data():
 
 def test_make_price_range():
     price_range = parse_product.make_price_range(['68.00'])
-    assert price_range == dataclasses.PriceRange(min=68.00, max=68.00)
+    assert price_range == models.PriceRange(min=68.00, max=68.00)
 
     price_range = parse_product.make_price_range(['20.00', '30.00'])
-    assert price_range == dataclasses.PriceRange(min=20.00, max=30.00)
+    assert price_range == models.PriceRange(min=20.00, max=30.00)
 
     price_range = parse_product.make_price_range(['30.00', '20.00'])
-    assert price_range == dataclasses.PriceRange(min=20.00, max=30.00)
+    assert price_range == models.PriceRange(min=20.00, max=30.00)
 
     # Can't pass empty list
     with pytest.raises(ValueError):
@@ -55,7 +55,7 @@ def test_make_price_range():
 
 def test_make_swatch(swatch_data):
     swatch = parse_product.make_swatch(swatch_data)
-    assert swatch == dataclasses.Swatch(
+    assert swatch == models.Swatch(
         primary_img=Url(
             'https://images.lululemon.com/is/image/lululemon/LM1219S_053870_1'),
         hover_img=Url(
@@ -70,12 +70,12 @@ def test_make_swatch(swatch_data):
 
 def test_make_product_variant(prod_variant_data):
     pv = parse_product.make_product_variant(prod_variant_data)
-    color = dataclasses.Color(
+    color = models.Color(
         group='orangePrinted',
         id=53884,
         name='Covered Camo Vintage Plum/Auric Gold'
     )
-    assert pv == dataclasses.ProductVariant(
+    assert pv == models.ProductVariant(
         color=color,
         is_in_store=False,
         size='XXL',
@@ -92,4 +92,4 @@ def test_make_product_integration():
     with open(PRODUCT_DATA_FILE) as json_file:
         data = json.load(json_file)
     product = parse_product.make_product(data)
-    assert isinstance(product, dataclasses.Product)
+    assert isinstance(product, models.Product)

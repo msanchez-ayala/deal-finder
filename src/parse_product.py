@@ -1,15 +1,15 @@
-from src import dataclasses
+from src import models
 
-Url = dataclasses.Url
+Url = models.Url
 
 
-def make_swatch(data: dict) -> dataclasses.Swatch:
+def make_swatch(data: dict) -> models.Swatch:
     primary_img = Url(data['primaryImage'])
     hover_img = Url(data['hoverImage'])
     url = Url(data['url'])
     color_id = int(data['colorId'])
     is_in_store = data['inStore']
-    return dataclasses.Swatch(
+    return models.Swatch(
         primary_img=primary_img,
         hover_img=hover_img,
         url=url,
@@ -19,14 +19,14 @@ def make_swatch(data: dict) -> dataclasses.Swatch:
     )
 
 
-def make_product_variant(data: dict) -> dataclasses.ProductVariant:
-    color = dataclasses.Color(
+def make_product_variant(data: dict) -> models.ProductVariant:
+    color = models.Color(
         group=data['colorGroup'],
         id=int(data['colorId']),
         name=data['colorName']
     )
     sku_style_order_id = int(data['skuStyleOrderId'])
-    return dataclasses.ProductVariant(
+    return models.ProductVariant(
         color=color,
         is_in_store=False,
         size=data['size'],
@@ -39,22 +39,22 @@ def make_product_variant(data: dict) -> dataclasses.ProductVariant:
     )
 
 
-def make_price_range(prices: list[str]) -> dataclasses.PriceRange:
+def make_price_range(prices: list[str]) -> models.PriceRange:
     if not prices:
         raise ValueError("Expected at least one value for a price range.")
     num_prices = len(prices)
     prices = [float(price) for price in prices]
     if num_prices == 1:
         price = prices[0]
-        return dataclasses.PriceRange(min=price, max=price)
+        return models.PriceRange(min=price, max=price)
     if num_prices > 2:
         raise ValueError(f"Expected at most 2 values, but got {num_prices}")
     min_price, max_price = min(prices), max(prices)
-    return dataclasses.PriceRange(min=min_price, max=max_price)
+    return models.PriceRange(min=min_price, max=max_price)
 
 
-def make_product(data: dict) -> dataclasses.Product:
-    currency_code = dataclasses.CurrencyCodes(data['currencyCode'])
+def make_product(data: dict) -> models.Product:
+    currency_code = models.CurrencyCodes(data['currencyCode'])
     default_sku = data['defaultSku']
     list_price_range = make_price_range(data['listPrice'])
     sale_price_range = make_price_range(data['productSalePrice'])
@@ -64,7 +64,7 @@ def make_product(data: dict) -> dataclasses.Product:
     swatches = [make_swatch(swatch_data)
                 for swatch_data in data['swatches']]
 
-    return dataclasses.Product(
+    return models.Product(
         available_sizes=data['allAvailableSizes'],
         currency_code=currency_code,
         default_sku=data['defaultSku'],

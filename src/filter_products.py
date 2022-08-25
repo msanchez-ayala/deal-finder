@@ -1,4 +1,4 @@
-from src import dataclasses
+from src import models
 
 
 DEFAULT_SIZE = 'M'
@@ -19,7 +19,7 @@ def get_matching_products(products: list[dict],
     return product_matches
 
 
-def has_matching_sizes(product: dataclasses.Product,
+def has_matching_sizes(product: models.Product,
                        query_sizes: list[str]) -> bool:
     available_sizes = product.available_sizes
     if not query_sizes:
@@ -32,14 +32,14 @@ def has_matching_sizes(product: dataclasses.Product,
         return any(size in available_sizes for size in query_sizes)
 
 
-def has_all_search_terms(product: dataclasses.Product, search_terms: list[str]) -> bool:
+def has_all_search_terms(product: models.Product, search_terms: list[str]) -> bool:
     display_name = product.display_name.lower()
     if not search_terms:
         search_terms = DEFAULT_SEARCH_TERMS
     return all(search_term.lower() in display_name for search_term in search_terms)
 
 
-def has_at_least_one_search_term(product: dataclasses.Product,
+def has_at_least_one_search_term(product: models.Product,
                                  search_terms: list[str]) -> bool:
     display_name = product.display_name.lower()
     if not search_terms:

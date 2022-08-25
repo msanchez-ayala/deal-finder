@@ -4,7 +4,7 @@ import string
 import time
 from typing import Optional
 
-from src import dataclasses
+from src import models
 from src import filter_products
 from src import parse_product
 
@@ -24,13 +24,13 @@ payload_template = string.Template("""
 def get_products(sizes: list[str],
                  req_search_terms: list[str],
                  opt_search_terms: list[str]
-                 ) -> Optional[list[dataclasses.Product]]:
+                 ) -> Optional[list[models.Product]]:
     matching_products = []
     page_num = 1
     more_to_search = True
     while more_to_search:
         payload = payload_template.substitute(
-            QUERY_TYPE=dataclasses.QueryTypes.MENS_SALE_SHORTS,
+            QUERY_TYPE=models.QueryTypes.MENS_SALE_SHORTS,
             PAGE_NUM=page_num,
             PAGE_SIZE=MAX_PAGE_SIZE)
         products = _get_products(payload)
@@ -46,7 +46,7 @@ def get_products(sizes: list[str],
     return matching_products
 
 
-def _get_products(payload: dict) -> Optional[list[dataclasses.Product]]:
+def _get_products(payload: dict) -> Optional[list[models.Product]]:
     headers = get_headers()
     response = requests.request(
         "POST", GQL_ENDPOINT, data=payload, headers=headers)

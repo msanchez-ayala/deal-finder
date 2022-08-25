@@ -42,6 +42,7 @@ class Color:
     id: int
     name: str
 
+
 @dataclass
 class ProductVariant:
     color: Color
