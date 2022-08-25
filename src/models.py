@@ -28,12 +28,6 @@ class SearchParameters:
     req_search_terms: list[str] = dataclasses.field(default_factory=list)
     opt_search_terms: list[str] = dataclasses.field(default_factory=list)
 
-    def __post_init__(self):
-        if not self.sizes:
-            self.sizes = ['M']
-        if not self.req_search_terms:
-            self.req_search_terms = ['Lined', '7"']
-
     def __repr__(self) -> str:
         header = 'SEARCH PARAMETERS'
         lines = [header,
@@ -55,6 +49,11 @@ class PriceRange:
             self.min = self.max
         elif self.max is None and self.min is not None:
             self.max = self.min
+
+    def __repr__(self):
+        if self.min == self.max:
+            return f'${self.min}'
+        return f'${self.min} - {self.max}'
 
 
 @dataclass
@@ -100,7 +99,7 @@ class Product:
     pdp_url: Url
     product_coverage: str
     repo_id: str
-    proudct_id: str
+    product_id: str
     is_in_store: bool
     unified_id: str
     variants: list[ProductVariant]

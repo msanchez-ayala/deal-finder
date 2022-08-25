@@ -8,7 +8,10 @@ from typing import List
 from src import models
 from src import request_products
 from src import send_email
+from src import format_html
 
+DEFAULT_SIZES = ['M']
+DEFAULT_RST = ['Lined', '7"']
 
 def parse_args(args: list[str]) -> models.SearchParameters:
     parser = argparse.ArgumentParser()
@@ -36,7 +39,12 @@ def parse_args(args: list[str]) -> models.SearchParameters:
         help="Keyword search terms where at least one must be found in each "
              "match."
     )
-    return parser.parse_args(args, namespace=models.SearchParameters())
+    search_params = parser.parse_args(args, namespace=models.SearchParameters())
+    if not search_params.sizes:
+        search_params.sizes = DEFAULT_SIZES
+    if not search_params.req_search_terms:
+        search_params.req_search_terms = DEFAULT_RST
+    return search_params
 
 
 def _yield_ser_products(products: List[models.Product]) -> Iterator[dict]:
@@ -46,24 +54,18 @@ def _yield_ser_products(products: List[models.Product]) -> Iterator[dict]:
 
 def _make_email_body(search_params: models.SearchParameters,
                      products: List[models.Product]) -> str:
-    num_products = len(products)
     body_lines = [repr(search_params),
-                  '\n',
-                  f'{num_products} found']
+                  '\n']
     return '\n'.join(body_lines)
-
-
-def _make_email_html(products: List[models.Product]) -> str:
-    records = _yield_ser_products(products)
-    return pd.DataFrame.from_records(records).to_html()
 
 
 def main():
     search_params = parse_args(sys.argv[1:])
     products = request_products.get_products(search_params)
     body = _make_email_body(search_params, products)
-    html = _make_email_html(products)
+    html = format_html.make_products_html(products)
     send_email.send_email(body=body, html=html)
+    print(f'{html}')
 
 
 if __name__ == '__main__':

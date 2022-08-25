@@ -76,7 +76,7 @@ def make_product(data: dict) -> models.Product:
         pdp_url=pdp_url,
         product_coverage=data['productCoverage'],
         repo_id=data['repositoryId'],
-        proudct_id=data['productId'],
+        product_id=data['productId'],
         is_in_store=data['inStore'],
         unified_id=data['unifiedId'],
         variants=variants,
