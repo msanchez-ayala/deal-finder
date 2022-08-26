@@ -10,8 +10,6 @@ from src import request_products
 from src import send_email
 from src import format_html
 
-DEFAULT_SIZES = ['M']
-DEFAULT_RST = ['Lined', '7"']
 
 def parse_args(args: list[str]) -> models.SearchParameters:
     parser = argparse.ArgumentParser()
@@ -40,10 +38,6 @@ def parse_args(args: list[str]) -> models.SearchParameters:
              "match."
     )
     search_params = parser.parse_args(args, namespace=models.SearchParameters())
-    if not search_params.sizes:
-        search_params.sizes = DEFAULT_SIZES
-    if not search_params.req_search_terms:
-        search_params.req_search_terms = DEFAULT_RST
     return search_params
 
 

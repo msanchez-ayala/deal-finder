@@ -34,7 +34,7 @@ def has_all_search_terms(product: models.Product,
                          search_terms: list[str]) -> bool:
     display_name = product.display_name.lower()
     if not search_terms:
-        raise ValueError('No required search terms')
+        return True
     return all(search_term.lower() in display_name for search_term in search_terms)
 
 

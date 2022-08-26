@@ -28,7 +28,7 @@ def get_products(search_params: models.SearchParameters
     more_to_search = True
     while more_to_search:
         payload = payload_template.substitute(
-            QUERY_TYPE=models.QueryTypes.MENS_SALE_SHORTS,
+            QUERY_TYPE=models.QueryTypes.MENS_SALE_ALL,
             PAGE_NUM=page_num,
             PAGE_SIZE=MAX_PAGE_SIZE)
         products = _get_products(payload)
