@@ -1,2 +1,2 @@
-# lululemon-scrape
-I want to know when some shorts go on sale
+# deal-finder
+I want to know when retail items go on sale
