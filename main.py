@@ -59,7 +59,6 @@ def main():
     body = _make_email_body(search_params, products)
     html = format_html.make_products_html(products)
     send_email.send_email(body=body, html=html)
-    print(f'{html}')
 
 
 if __name__ == '__main__':
