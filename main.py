@@ -39,6 +39,12 @@ def parse_args(args: list[str]) -> argparse.ArgumentParser:
         help="Keyword search terms for all vendor sites."
     )
     parser.add_argument(
+        '-min_discount',
+        type=int,
+        default=0,
+        help='Minimum discount percentage that all products must have.'
+    )
+    parser.add_argument(
         '-local_only',
         action='store_true',
         help='If true, write out index.html in CWD instead of sending an email.'
@@ -49,6 +55,11 @@ def parse_args(args: list[str]) -> argparse.ArgumentParser:
         parser.error('Expected at least one search term, but got '
                      f'{search_params.search_terms}')
 
+    min_discount = search_params.min_discount
+    if min_discount < 0 or min_discount > 100:
+        parser.error('ERROR: min_discount of {min_discount} is '
+                     f'outside the acceptable range of [0, 100]')
+
     return search_params
 
 
@@ -56,6 +67,9 @@ def make_html_from_search(search_params: argparse.Namespace):
     vendor_htmls = []
     for vendor_mod in iterate_vendors.yield_vendor_modules():
         vendor_name = derive_vendor_name_from_module(vendor_mod)
+        if vendor_name.lower() != 'lululemon':
+            print(f'NOTE: skipping {vendor_name}')
+            continue
         try:
             requester_mod = vendor_mod.requester
             Parser = vendor_mod.parser.ProductParser
@@ -69,7 +83,7 @@ def make_html_from_search(search_params: argparse.Namespace):
         if not products:
             break
         html = format_html.make_vendor_html(
-            vendor_name, products, Parser)
+            vendor_name, products, Parser, search_params.min_discount)
         vendor_htmls.append(html)
         print(f'Succeeded with {vendor_name}')
 

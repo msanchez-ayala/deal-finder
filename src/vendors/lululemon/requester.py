@@ -3,8 +3,6 @@ import string
 
 from src import base_requester
 
-MENS_SALE_ALL_QUERY_ID = 'N-1z0xcmkZ8t6'
-
 
 class Requester(base_requester.BaseRequester):
     SESSION_ENDPOINT = 'https://shop.lululemon.com'
@@ -12,10 +10,13 @@ class Requester(base_requester.BaseRequester):
     MAX_PAGE_SIZE = 20
 
     def _make_request_params(self, page_num: int) -> str:
+        page_offset = (page_num - 1) * self.MAX_PAGE_SIZE
         return {
             "Ntt": self._format_search_terms(),
             "genderAffinity": "all",
-            "page\\[offset\\]": f"{page_num}"}
+            "page[offset]": str(page_offset),
+            "page[limit]": str(self.MAX_PAGE_SIZE)
+        }
 
     def _format_search_terms(self) -> str:
         return "+".join(self.search_terms)

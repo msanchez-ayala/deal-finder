@@ -1,7 +1,5 @@
 from typing import Protocol
 
-MIN_SALE_PERCENTAGE = 40
-
 
 class ProductParser(Protocol):
     product: dict[str, str]
@@ -32,6 +30,8 @@ def make_product_card_html(parser: ProductParser) -> str:
     product_name = parser.get_product_name()
     current_price = parser.get_current_price()
     sale_percentage = parser.derive_sale_percentage()
+    price_display = (f'${current_price} ({sale_percentage}% off)'
+                     if sale_percentage else f'${current_price}')
     return f"""  
     <div class="product-card" style="display: inline-block; margin: 24px 12px 0px 0px; height: 20%; width: 23%;">
         <a class="image-with-link" href="{product_url}">
@@ -43,7 +43,7 @@ def make_product_card_html(parser: ProductParser) -> str:
               {product_name}
             </div>
             <div class="price-range" style="{BASE_TEXT_STYLING} width: 30%; margin-right: 2%; text-align:right; font-weight: lighter">
-              ${current_price} ({sale_percentage}%)
+              {price_display}
             </div>
         </div>
     </div>
@@ -51,11 +51,12 @@ def make_product_card_html(parser: ProductParser) -> str:
 
 
 def make_product_card_htmls(products: list[dict],
-                            parser_class: type(ProductParser)) -> str:
+                            parser_class: type(ProductParser),
+                            min_discount: int) -> str:
     prod_card_htmls = []
     for product in products:
         parser = parser_class(product)
-        if parser.derive_sale_percentage() < MIN_SALE_PERCENTAGE:
+        if parser.derive_sale_percentage() < min_discount:
             continue
         prod_card_htmls.append(make_product_card_html(parser))
     return '\n'.join(prod_card_htmls)
@@ -63,8 +64,9 @@ def make_product_card_htmls(products: list[dict],
 
 def make_vendor_html(vendor_name: str,
                      products: list[dict],
-                     parser_class: type(ProductParser)) -> str:
-    products = make_product_card_htmls(products, parser_class)
+                     parser_class: type(ProductParser),
+                     min_discount: int) -> str:
+    products = make_product_card_htmls(products, parser_class, min_discount)
     return f"""
     <div style="width: 100%; display: block;">
         <div style="{FONT_STYLING} width: 100%; font-size: 4ex; margin: 0px">{vendor_name}</div>
