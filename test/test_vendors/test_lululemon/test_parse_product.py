@@ -1,7 +1,7 @@
 import json
 import pytest
-from src import models
-from src import parse_product
+from src.lululemon import models
+from src.lululemon import parse_product
 
 Url = models.Url
 

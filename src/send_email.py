@@ -50,5 +50,3 @@ def send_email(body: str = '', html: str = '') -> None:
 
 if __name__ == '__main__':
     send_email('test email')
-
-
