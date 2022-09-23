@@ -23,19 +23,8 @@ def main():
 def parse_args(args: list[str]) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '--size',
-        dest='sizes',
-        action='append',
-        help="The available size that each matching item can have. Pass "
-             "multiple sizes to filter by at least one of them e.g. --size "
-             "M --size 32 to guarantee at least one of those sizes will be "
-             "matched."
-    )
-    parser.add_argument(
-        '-search_term',
-        '-st',
-        dest='search_terms',
-        action='append',
+        'search_terms',
+        nargs='+',
         help="Keyword search terms for all vendor sites."
     )
     parser.add_argument(
