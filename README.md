@@ -13,5 +13,5 @@ python3 main.py "pace breaker"
 ```
 <img width="974" alt="full_search" src="https://github.com/msanchez-ayala/deal-finder/assets/54561946/d6587f4a-3205-4f3b-b7ca-79c9a461c0d0">
 
-
-
+# TODO
+Implement requesters and parsers for remaining vendors.
