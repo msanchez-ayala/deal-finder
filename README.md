@@ -1,7 +1,7 @@
 # deal-finder
 We want to know when retail items go on sale. This is a CLI to help scrape different menswear websites for certain matches and sales.
 
-We can search for all products with a minimum discount percentage and get an email with the results
+We can search for all products with a minimum discount percentage and get an email with images hyperlinked to their respective product.
 ```
 python3 main.py "pace breaker" -min_discount 20
 ```
